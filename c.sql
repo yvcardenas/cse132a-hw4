@@ -5,3 +5,7 @@
 -- 3. Filter using regex:
 --      WHERE comment ~*'(defect|broken)'
 -- 4. Return distinct product names and matching comments.
+SELECT DISTINCT p.pname AS pname, comment AS matching_comment
+FROM product p JOIN review r ON p.pid = r.pid
+CROSS JOIN LATERAL unnest(r.comments) AS comment
+WHERE p.category = 'electronics' AND comment ~*'(defect|broken)';

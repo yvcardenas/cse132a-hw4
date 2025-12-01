@@ -7,3 +7,18 @@
 -- 4. Filter messages using regex:
 --      WHERE msg ~*'(refund|return)'
 -- 5. Return unique topic names and the matching message text
+WITH RECURSIVE Subtopics(tid, tname, parent_tid) AS (
+--     Base Case
+    SELECT tid, tname, parent_tid
+    FROM topic
+    WHERE tname = 'Support'
+
+    UNION ALL
+--     Recursive Case
+    SELECT t.tid, t.tname, t.parent_tid
+    FROM Subtopics s JOIN topic t on t.parent_tid = s.tid
+)
+SELECT DISTINCT s.tname as tname, msg
+FROM Subtopics s JOIN discussion d ON s.tid = d.tid
+CROSS JOIN LATERAL unnest(messages) AS msg
+WHERE msg ~*'(refund|return)';

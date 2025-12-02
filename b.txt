@@ -1,0 +1,8 @@
+I started with the skeleton of the recursive CTE. I know that the base case should start from 'home' so I selected the
+source and target from pagelinks WHERE source = 'home'.
+
+Similarly to question A, I want to follow the links starting from an initial value, in this case 'home'. To do this I
+JOIN the known paths with the pagelinks table to find all its connections. I JOIN them on p.tgt = pl.source. With this
+JOIN, I select the newly found source and target from the pagelinks table to move on to the next page connection.
+
+For the final SELECT, I want the DISTINCT targets FROM paths that match the given regex condition, "tgt ~*'(ref|polic)'"

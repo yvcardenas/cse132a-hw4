@@ -18,6 +18,6 @@ WITH RECURSIVE Hierarchy(employee_name, manager_id) AS (
     FROM Hierarchy h JOIN employee e on h.manager_id = e.eid
     WHERE  e.managerid IS NOT NULL
 )
-SELECT h.employee_name, e.ename AS mname
+SELECT h.employee_name, e.ename AS manager_name
 FROM Hierarchy h JOIN employee e on h.manager_id = e.eid
-ORDER BY h.employee_name, mname;
+ORDER BY h.employee_name, manager_name;

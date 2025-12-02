@@ -1,0 +1,14 @@
+I first set up the skeleton of the recursive CTE to see the layout.
+
+Base Case:
+The instructions state that the base case selects the name and managerid of employees with a manager, so I selected the
+employees where the managerid IS NOT NULL. If the managerid is null then they do not have a manager.
+
+Recursive Step:
+I essentially want to the climb up the employee ladder. For each row already known in Hierarchy, I join it with the employee table
+to find the employee's manager as an employee. This occurs when h.managerid = e.eid. I keep the same employee_name, but replace manager_id
+with e.managerid, which is the manager's manager. Repeating this lets me move up the chain until there are no more managers above the employee.
+
+For the final SELECT, I do the same JOIN between Hierarchy and employee with h.managerid = e.eid, but now select the
+employee_name and manager name (e.ename AS manager_name). Finally, I order the output by the employee_name and manager_name
+so that its sorted by employee and then manager.

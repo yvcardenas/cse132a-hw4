@@ -1,0 +1,11 @@
+As the instructions suggested, I did a JOIN with product and review on pid (p.pid = r.pid)
+so that each review is tied to its product.
+
+Since I wanted to expand each element in the comments array, I added a CROSS JOIN LATERAL
+to the previous JOIN. Using the CROSS JOIN LATERAL lets the unnest function see the current
+row from the review table and turn its comments array into one row per comment, which is named comment.
+
+I filtered using the case-insensitive regex expression given, ~*'(defect|broken)', and by the category name
+'electronics'.
+
+From all of this I distinctly selected the product names and comments that match the filtering.

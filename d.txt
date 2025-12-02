@@ -1,0 +1,18 @@
+I set up the skeleton of the recursive CTE Subtopics.
+
+The instructions stated that it starts from the row where tname = 'Support', so for the base case
+I simply selected the tid, tname, and parent_tid from the topic table where tname='Support'. This
+satisfies the first step of the instructions.
+
+I used UNION ALL instead of UNION because I do not need the CTE itself to remove duplicates when any
+duplicates in the final result are handled by the SELECT DISTINCT at the end.
+
+For the recursive case, I am trying to move on to the next subtopic so I JOIN the known subtopic with
+the topic table ON t.parent_tid = s.tid to get the t.tid, t.tname and t.parent_id of the new subtopic.
+
+In the final SELECT, I JOIN the subtopics with its discussion with their common tid to access the subtopics
+messages. I then do a CROSS JOIN LATERAL to unnest(messages) and unravel the array into an individual message rows
+that are known individually as msg.
+
+From these joins, I distinctly select the topic name and message that matches the regex filtering,
+msg ~*'(refund|return)'.
